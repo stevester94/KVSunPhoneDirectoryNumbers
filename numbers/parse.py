@@ -10,23 +10,25 @@ class RawEntry:
 
 whitePages = file("WhitePages.txt", 'r')
 RawEntries = []
+BusinessEntries = []
+PersonalEntries = []
 
 #determine if the line should be skipped
 #expects an rstripped line
 def determineSkip(line):
-	if len(line) == 2 and line[1] == '-':
-		return True
 	if line == '':
 		return True
 	if len(line) == 1:
+		return True
+	if line[0] in ALPHA_LETTERS and line[1] == '-': 
 		return True
 	else:
 		return False
 
 
 #iterate over every line in WhitePages.txt
-#if the line is blank skip
-#if the line begins with a space it is a member of the last entry
+#Determines first if line should be skipped
+#Check if begins with a capital letter
 #	if so, will append to the lines member of the RawEntry
 #Else will begin a new raw entry
 for l in whitePages:
@@ -44,6 +46,13 @@ for l in whitePages:
 		r.lines.append(currentLine)
 		RawEntries.append(r)
 
-
+#Seperate into business entries and personal entries
+#Based soley on if has multiple entries
 for r in RawEntries:
+	if len(r.lines) > 1:
+		BusinessEntries.append(r)
+	else:
+		PersonalEntries.append(r)
+
+for r in BusinessEntries:
 	print r.lines[0]
