@@ -31,28 +31,29 @@ def determineSkip(line):
 #Check if begins with a capital letter
 #	if so, will append to the lines member of the RawEntry
 #Else will begin a new raw entry
-for l in whitePages:
-	currentLine = l.rstrip()
+def parseEntries():
+	for l in whitePages:
+		currentLine = l.rstrip()
 
-	if determineSkip(currentLine):
-		print "skipped line"
-		continue
+		if determineSkip(currentLine):
+			print "skipped line"
+			continue
 
-	if currentLine[0] not in ALPHA_LETTERS:
-		RawEntries[-1].lines.append(currentLine)
+		if currentLine[0] not in ALPHA_LETTERS:
+			RawEntries[-1].lines.append(currentLine)
 
-	else:
-		r = RawEntry()
-		r.lines.append(currentLine)
-		RawEntries.append(r)
+		else:
+			r = RawEntry()
+			r.lines.append(currentLine)
+			RawEntries.append(r)
 
-#Seperate into business entries and personal entries
-#Based soley on if has multiple entries
-for r in RawEntries:
-	if len(r.lines) > 1:
-		BusinessEntries.append(r)
-	else:
-		PersonalEntries.append(r)
+	#Seperate into business entries and personal entries
+	#Based soley on if has multiple entries
+	for r in RawEntries:
+		if len(r.lines) > 1:
+			BusinessEntries.append(r)
+		else:
+			PersonalEntries.append(r)
 
-for r in BusinessEntries:
-	print r.lines[0]
+	return [BusinessEntries, PersonalEntries]
+
