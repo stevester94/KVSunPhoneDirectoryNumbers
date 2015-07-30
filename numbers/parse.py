@@ -148,15 +148,18 @@ def generateDatabase(entries):
 		sqlStatement = "INSERT INTO Entries VALUES("
 		sqlStatement = sqlStatement + "'" + entry.displayName + "', "
 		sqlStatement = sqlStatement + "'" + " ".join(entry.associatedNumbers) + "', "
-		sqlStatement = sqlStatement + r"\n" + " ".join(entry.lines) + "', "
+		sqlStatement = sqlStatement + "'" + "'||CHAR(10)||'".join(entry.lines) + "', "
 		sqlStatement = sqlStatement + "'" + entry.bannerPath + "'" + ", "
 		sqlStatement = sqlStatement + str(int(len(entry.associatedNumbers) > 1)) + ", "
 		sqlStatement = sqlStatement + str(int(len(entry.lines) > 1))
 		sqlStatement = sqlStatement + ")"
 		
-		print "-----------"
-		print sqlStatement
-		cur.execute(sqlStatement)
+		try:
+			cur.execute(sqlStatement)
+		except Exception, e:
+			print "error: "
+			print e
+			print sqlStatement
 
 	con.commit()
 	con.close()
