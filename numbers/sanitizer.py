@@ -22,6 +22,12 @@ for f in files:
 			sanitizedName = sanitizedName + '_'
 	while sanitizedName[-1] == "_":
 		sanitizedName = sanitizedName[:-1]
+
+	sanitizedName = sanitizedName.replace("__", "_") #fuck it
+	sanitizedName = sanitizedName.replace("__", "_")
+	sanitizedName = sanitizedName.replace("__", "_")
+
+
 	print sanitizedName
 	print "converted/" + unmodF
-	call(["copy",  "./converted/" + unmodF, "./formatted/" + sanitizedName + ".jpg"])
+	call(["cp",  "./converted/" + unmodF, "./formatted/" + sanitizedName + ".jpg"])
