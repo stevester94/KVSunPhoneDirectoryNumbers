@@ -126,6 +126,8 @@ def parseAndFormEntries(entries):
 				entry.displayName = line.replace(number, '') #remove number from entry if is single line
 			else:
 				entry.displayName = entry.lines[0]
+		if entry.bannerPath == "":
+			entry.bannerPath = "no path entered"
 
 
 def testParseAndForm():
