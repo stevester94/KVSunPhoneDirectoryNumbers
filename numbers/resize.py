@@ -8,6 +8,6 @@ len(files)
 counter = 0
 for f in files:
 	print counter
-	call(["convert", "./formatted/" + f, "-resize", "600x", "./resized/" + f])
+	call(["convert", "./formatted/" + f, "-resize", "600x300!", "./resized/" + f])
 	counter = counter + 1
 		
