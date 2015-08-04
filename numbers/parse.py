@@ -56,8 +56,8 @@ def dumpDisplayNames(entries):
 
 #Generate CSV files for entry names and formatted image names
 def generateCSVs(entries):
-	imageNamesFile = file("imageNames.csv", "w")
-	entriesNamesFile = file("entryNames.csv", "w")
+	imageNamesFile = file("imageNames.csv", "wb")
+	entriesNamesFile = file("entryNames.csv", "wb")
 
 	imageNamesCSV = csv.writer(imageNamesFile)
 	entriesNamesCSV = csv.writer(entriesNamesFile, quoting=csv.QUOTE_ALL)
@@ -70,7 +70,8 @@ def generateCSVs(entries):
 		imageNamesCSV.writerow([f])
 
 	for e in entries:
-		entriesNamesCSV.writerow([e.displayName])
+		if e.multiLine:
+			entriesNamesCSV.writerow([e.displayName])
 
 def generateDatabase(entries):
 	con = lite.connect('entries.db')
