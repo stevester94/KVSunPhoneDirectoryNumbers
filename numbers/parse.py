@@ -17,7 +17,7 @@ STANDARD_REG  = r"[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"
 
 ENTRIES_SCHEMA = r"displayName TEXT PRIMARY KEY, associatedNumbers TEXT, allLines TEXT, bannerPath TEXT, hasMultipleNumbers BOOLEAN, hasMultipleLines BOOLEAN"
 CATEGORIES_SCHEMA = r"displayName TEXT, category TEXT, FOREIGN KEY(displayName) REFERENCES entries(displayName)"
-
+CATEGORIES_LIST_SCHEMA = r"Category TEXT"
 
 class RawEntry:
 	def __init__(self):
@@ -118,6 +118,8 @@ def generateDatabase(entries):
 			print "error: "
 			print e
 			print sqlStatement
+
+	#Populate Categories_List
 
 	con.commit()
 	con.close()
