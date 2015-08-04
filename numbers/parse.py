@@ -145,7 +145,6 @@ def parseBannerPaths(entries):
 	reader = csv.reader(csvFile)
 
 	for row in reader:
-		print row[0]
 		matchedEntry = None
 		for e in entries:
 			if e.displayName == row[0]:
@@ -153,7 +152,7 @@ def parseBannerPaths(entries):
 		try:
 			matchedEntry.bannerPath = row[1]
 		except:
-			pass
+			print "Exception: " + row[0] + " : " + row[1] + ";"
 #iterate over every line in WhitePages.txt
 #Determines first if line should be skipped
 #Check if begins with a capital letter
