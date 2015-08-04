@@ -447,7 +447,7 @@ Bradley, Edie   202 Donaldo Ct, Wfrd Hts	376-3626
 Bradley, Warren   2410 Ronita Ln, Lk Isbl	379-9196
 Bradshaw, C E   Krnvl	376-6604
 Brady, J   Krnvl	376-8614
-Brady, T   Wldn	378-4036
+Brady, T   Weldn	378-4036
 Brady, T   Wldn	378-2577
 Braget, Lawrence J   7898 Rocky Hill Rd, Onyx	378-3660
 Braiser, Cindy   6924 Wofford Blvd, Wfrd Hts	376-4303
@@ -483,7 +483,7 @@ Brouett, Robert J   4480 Erskine Creek Rd, LkIsbl	379-6136
 Brown, D   Wldn	378-1974
 Brown, DJ	376-2642
 Brown, Donna   278 Burlando Rd, Krnvl	376-4242
-Brown, G   Wldn	378-1905
+Brown, G   Weldn	378-1905
 Brown, G   Wldn	378-2410
 Brown, Grace   5421   Shoffstall Ln Wldn	378-2805
 Brown, Gertrude   Bdfsh	379-5172
@@ -546,7 +546,7 @@ Burke, Marion   3105 Warren Wy, Lk Isbl	379-5761
 Burkette, Cynthia   4028 Helen St, Lk Isbl	379-2194
 Burkhammer, L   121 Vine Wy, Bdfsh	379-8371
 Burkhart, R	376-6840
-Burleson, Doris   4659 Kelso Creek Rd, Wldn	378-4261
+Burleson, Doris   4659 Kelso Creek Rd, Weldn	378-4261
 Burleson, Doris   4659 Kelso Creek Rd, Wldn	378-2853
 BURLINGTON, THE   Lic.# 155801223
    ASSISTED LIVING FOR SENIORS
@@ -1189,7 +1189,7 @@ Eccles, Diana   235 Big Blue Rd, Krnvl	376-8807
 Echols, Randy   Lk Isbl	379-4515
 Ecological Systems II   7138 Lake Isabella Blvd, Lk Isbl	379-5336
 Eddy, Nathan   4391 Cottonwood Ln Wldn	378-3787
-Edison International
+Edison international
    A General Services
    U.S. & Canada	800 655-4555
    Agricultural Services And Pump Rates	800 896-1245
@@ -1208,7 +1208,7 @@ Edison International
    Low Income Rate Assistance-CARE	800 447-6620
    Service Requests-
       Turn Ons/ Offs & Transfers	800 684-8123
-Edison International
+Edison International:
    Emergency Repairs-Outages	800 611-1911
    Energy Theft Hotline	800 227-3901
    Hearing-Speech Impaired	800 352-8580
@@ -1525,7 +1525,7 @@ Gardner, L	379-4117
 Gardner, Rene   Sq Valley	379-4985
 Gardner, Stan   Bdfsh	379-4597
 Garland, Will & Barbara   Krnvl	376-4779
-Garlinger, B   Wldn	378-3021
+Garlinger, B   Weldn	378-3021
 Garlinger, B   Wldn	378-4278
 Garrett, James   Wldn	378-2900
 Garrett, Shirley   5037 Shawnee Dr, Wldn	378-2156
@@ -1830,9 +1830,9 @@ Hebert, Roger   2701 Erskine Creek Rd, Lk Isbl	379-2895
 Hebestreit, William F   2 Laurel St, Wfrd Hts	376-6381
 Hedges, John   Wldn	378-4200
 Hedges, Sabrina   5609 Hooper Rd, Wldn	378-2690
-Hedrick, M   Wfrd Hts	376-8689
-Hedrick, M   Wfrd Hts	376-3459
-Hedrick, M   Wfrd Hts	376-3958
+Hedrick, M   Wofrd Hts	376-8689
+Hedrick, M   Wfrrd Hts	376-3459
+Hedrick, M   Wffrd Hts	376-3958
 Heffner, Michael   8649 South Lake Dr, Wldn	378-3309
 Hefner, Max &?Dee   Lk Isbl	379-4821
 Heigl, Rudolph   Wfrd Hts	376-3176
@@ -2156,7 +2156,7 @@ Jones, M   Lk Isbl	379-8509
 Jones, Milton   Wldn	378-1303
 Jones, OD   Lk Isbl	379-4509
 Jones, P   Wfrd Hts	376-1106
-Jones, Richard   Wldn	378-2260
+Jones, Richard   Weldn	378-2260
 Jones, Richard   Wldn	378-3192
 Jones, Velva   105 Roby Ln, Wfrd Hts	376-9193
 Jones, Wendell W   113 Gary St, Bdfsh	379-4068
@@ -2523,7 +2523,7 @@ LAMBERT’S PLUMBING SERVICE   Lic.# 508909
    3104 Raccoon Rd, Lk Isbl	379-3332
    Cell	223-1682
 Lambert, Robert   3104 Raccoon Rd, Mt Mesa	379-3332
-Lambert, Robert   Krnvl	379-1362
+Lambert, Robert   Kernvl	379-1362
 Lambert, Robert   Krnvl	223-1440
 Lambert, Thomas   4221 Manzanita St, Lk Isbl	378-3102
 Lampkin, Jeff   Bdfsh	379-4167
@@ -2918,7 +2918,7 @@ Miles, James   140 Alta Pinos Wy, Bdfsh	379-3599
 Miles, Jessica   1806 Curran Av, Lk Isbl	379-2703
 Miller, Angela   Wfrd Hts	376-1516
 Miller, Carol   Bdfsh	379-6324
-Miller, David   330 Pioneer Pl, Bdfsh	379-5510
+Miller, David   330 Pioneer Pl, Bodfsh	379-5510
 Miller, David   330 Pioneer Pl, Bdfsh	379-4340
 Miller, E   7774 Redhill Rd, Lk Isbl	379-4995
 Miller, Harry   125 Pinewood Dr, Wfrd Hts	376-1364
@@ -3217,7 +3217,7 @@ Owens, Lorene   2410 Ronita Ln, Lk Isbl	379-2013
 Owens, Merle   5401 S Kelso Valley Rd, Wldn	378-2607
 Owens Valley Career Development Center
    6504 Lake Isabella Blvd, Lk Isbl	379-4770
-Owens Valley Career Development Center	379-5220
+Owens Valley Career Development center	379-5220
    12600 Mountain Mesa Rd, Mt Mesa	379-5680
 Oxford, Scott   Wfrd Hts	376-6361
 OXLEY PEST CONTROL, INC   Lic.# PR3853
@@ -3840,7 +3840,6 @@ Schools
       5104 Lake Isabella Bl, Lk Isbl	379-3651
    Kernville Elementary School
       13350 Sierra Wy, Krnvl	376-2249
-Schools
    South Fork Union Elementary School District
    South Fork Elementary School
       199 Highway 178, Wldn	378-2211
@@ -3929,7 +3928,7 @@ Shepherd of the Hills Lutheran Church (LCMS)
    377 Highway 155, Lk Isbl	379-2343
    Pastor	379-3221
 Sherman, M   Krnvl	376-6186
-Sherrill, M   Bdfsh	379-3696
+Sherrill, M   Bodfsh	379-3696
 Sherrill, M   Bdfsh	549-0406
 Sherrl’s Chateau of Beauty Salon   12604 Mt Mesa Rd Mt Mesa	379-5704
 Sherrl’s Chareau of Beauty Salon   12604 Mt Mesa Rd, Mt Mesa	378-3211

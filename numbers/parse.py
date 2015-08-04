@@ -15,8 +15,8 @@ ALPHA_LETTERS = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"
 TOLL_FREE_REG = r"[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"
 STANDARD_REG  = r"[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"
 
-DATABASE_SCHEMA = r"displayName TEXT, associatedNumbers TEXT, allLines TEXT, bannerPath TEXT, hasMultipleNumbers BOOLEAN, hasMultipleLines BOOLEAN"
-
+ENTRIES_SCHEMA = r"displayName TEXT PRIMARY KEY, associatedNumbers TEXT, allLines TEXT, bannerPath TEXT, hasMultipleNumbers BOOLEAN, hasMultipleLines BOOLEAN"
+CATEGORIES_SCHEMA = r"displayName TEXT, category TEXT, FOREIGN KEY(displayName) REFERENCES entries(displayName)"
 
 
 class RawEntry:
@@ -81,7 +81,7 @@ def generateDatabase(entries):
 	except:
 		print "Table does not exist, continuing"
 
-	cur.execute("CREATE TABLE Entries(" + DATABASE_SCHEMA + ")")
+	cur.execute("CREATE TABLE Entries(" + ENTRIES_SCHEMA + ")")
 	for entry in entries:
 		sqlStatement = "INSERT INTO Entries VALUES("
 		sqlStatement = sqlStatement + "'" + entry.displayName + "', "
@@ -92,6 +92,26 @@ def generateDatabase(entries):
 		sqlStatement = sqlStatement + str(int(len(entry.lines) > 1))
 		sqlStatement = sqlStatement + ")"
 		
+		try:
+			cur.execute(sqlStatement)
+		except Exception, e:
+			print "error: "
+			print e
+			print sqlStatement
+
+	#generate categories table
+	try:
+		cur.execute("DROP TABLE categories")
+	except:
+		print "Table does not exist, continuing"
+
+	cur.execute("CREATE TABLE Categories(" + CATEGORIES_SCHEMA + ")")
+	for row in parseCategoryCSV():
+		if row[0] == "":
+			continue
+		sqlStatement = "INSERT INTO Categories VALUES("
+		sqlStatement = sqlStatement + "'" + row[0] + "', "
+		sqlStatement = sqlStatement + "'" + row[1] + "')"
 		try:
 			cur.execute(sqlStatement)
 		except Exception, e:
@@ -191,6 +211,15 @@ def parseEntries():
 	whitePages.close()
 
 	return [BusinessEntries, PersonalEntries]
+
+#Returns array of tuple-> (displayName, category)
+def parseCategoryCSV():
+	csvFile = file("categories.csv", "r")
+	reader = csv.reader(csvFile)
+	retAr = []
+	for row in reader:
+		retAr.append((row[0], row[1]))
+	return retAr
 
 #just want to check that everything is kosher...
 def sanityCheck(entries):
