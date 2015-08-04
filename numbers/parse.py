@@ -50,6 +50,9 @@ def determineSkip(line):
 		return True
 	else:
 		return False
+def dumpDisplayNames(entries):
+	for e in entries:
+		print e.displayName + ";"
 
 #Generate CSV files for entry names and formatted image names
 def generateCSVs(entries):
@@ -97,6 +100,8 @@ def generateDatabase(entries):
 
 	con.commit()
 	con.close()
+
+
 
 #matches out all numbers and remove them, place them in phonenumber field
 #Run on all, number is only removed from single line entries
@@ -198,11 +203,6 @@ def sanityCheck(entries):
 			print e.displayName + " is multiLine with one line"
 		if len(e.lines) < 1:
 			print e.displayName + " has no lines"
-
-def dumpDisplayNames(entries):
-	for e in entries:
-		print e.displayName + ";"
-
 
 if __name__ == '__main__':
 	[businessEntries, personalEntries] = parseEntries()
