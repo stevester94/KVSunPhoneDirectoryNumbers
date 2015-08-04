@@ -17,7 +17,7 @@ STANDARD_REG  = r"[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"
 
 ENTRIES_SCHEMA = r"displayName TEXT PRIMARY KEY, associatedNumbers TEXT, allLines TEXT, bannerPath TEXT, hasMultipleNumbers BOOLEAN, hasMultipleLines BOOLEAN"
 CATEGORIES_SCHEMA = r"displayName TEXT, category TEXT, FOREIGN KEY(displayName) REFERENCES entries(displayName)"
-CATEGORIES_LIST_SCHEMA = r"Category TEXT"
+CATEGORIES_LIST_SCHEMA = r"Category TEXT PRIMARY KEY"
 
 class RawEntry:
 	def __init__(self):
@@ -119,8 +119,19 @@ def generateDatabase(entries):
 			print e
 			print sqlStatement
 
-	#Populate Categories_List
-
+	#Populate Categories_List with distinct categories from categories
+	try:
+		cur.execute("DROP TABLE CategoriesList")
+	except:
+		print "Table does not exist, continuing"
+	cur.execute("CREATE TABLE CategoriesList(" + CATEGORIES_LIST_SCHEMA + ")")	
+	sqlStatement = "INSERT INTO CategoriesList Select DISTINCT category from CATEGORIES"
+	try:
+		cur.execute(sqlStatement)
+	except Exception, e:
+		print "error: "
+		print e
+		print sqlStatement
 	con.commit()
 	con.close()
 
