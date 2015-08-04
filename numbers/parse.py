@@ -141,16 +141,19 @@ def parseAndFormEntries(entries):
 			entry.displayName = entry.displayName[:-1]
 
 def parseBannerPaths(entries):
-	csvFile = file("bannerPaths.csv", "r")
+	csvFile = file("banners.csv", "rb")
 	reader = csv.reader(csvFile)
 
 	for row in reader:
+		print row[0]
 		matchedEntry = None
 		for e in entries:
-			if e.displayName == row[1]:
+			if e.displayName == row[0]:
 				matchedEntry = e
-		matchedEntry.bannerPath = row[0]
-
+		try:
+			matchedEntry.bannerPath = row[1]
+		except:
+			pass
 #iterate over every line in WhitePages.txt
 #Determines first if line should be skipped
 #Check if begins with a capital letter
@@ -205,21 +208,28 @@ def sanityCheck(entries):
 		if len(e.lines) < 1:
 			print e.displayName + " has no lines"
 
+def testNonNullBanners(entries):
+	for e in entries:
+		if e.bannerPath != "no path entered":
+
+			print e.displayName + " : " + e.bannerPath + ";"
+
 if __name__ == '__main__':
 	[businessEntries, personalEntries] = parseEntries()
 	allEntries = businessEntries + personalEntries
 	parseAndFormEntries(allEntries)
 
-	print "options: "
-	print "1. run sanity checks"
-	print "2. generateDatabase"
-	print "3. generateCSVs"
-	print "4. parseBannerPath"
-	print "5. dumpDisplayNames"
-	print "x. exit"
-
 	choice = ""
 	while choice != "x":
+		print "options: "
+		print "1. run sanity checks"
+		print "2. generateDatabase"
+		print "3. generateCSVs"
+		print "4. parseBannerPaths"
+		print "5. dumpDisplayNames"
+		print "6. testNonNullBanners"
+		print "x. exit"
+
 		choice  = (raw_input("choice: ")).rstrip()
 
 		if choice == "1":
@@ -229,9 +239,11 @@ if __name__ == '__main__':
 		elif choice == "3":
 			generateCSVs(allEntries)
 		elif choice == "4":
-			pass
+			parseBannerPaths(allEntries)
 		elif choice == "5":
 			dumpDisplayNames(allEntries)
+		elif choice == "6":
+			testNonNullBanners(allEntries)
 		elif choice == "x":
 			exit()
 		else:
