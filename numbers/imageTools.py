@@ -16,12 +16,12 @@ def convertToJPG():
 		counter = counter + 1
 
 def resize():
-	files = listdir("./formatted")
+	files = listdir("./sanitized")
 	len(files)
 	counter = 0
 	for f in files:
 		print counter
-		call(["convert", "./formatted/" + f, "-resize", "600x300!", "./resized/" + f])
+		call(["convert", "./sanitized/" + f, "-resize", "600x", "./ready/" + f])
 		counter = counter + 1
 
 def sanitize():
@@ -60,8 +60,9 @@ if __name__ == '__main__':
 	while choice != "x":
 		print "options: "
 		print "1. convertToJPG"
-		print "2. resize"
-		print "3. sanitize"
+		print "2. sanitize"
+		print "3. resize"
+		
 		print "x. exit"
 
 		choice  = (raw_input("choice: ")).rstrip()
@@ -69,9 +70,9 @@ if __name__ == '__main__':
 		if choice == "1":
 			convertToJPG()
 		elif choice == "2":
-			resize()
-		elif choice == "3":
 			sanitize()
+		elif choice == "3":
+			resize()
 		elif choice == "x":
 			exit()
 		else:
