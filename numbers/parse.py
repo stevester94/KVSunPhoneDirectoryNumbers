@@ -7,6 +7,8 @@
 import re
 import sqlite3 as lite
 import csv
+import yellowPages
+
 from os import listdir
 
 
@@ -70,8 +72,7 @@ def generateCSVs(entries):
 		imageNamesCSV.writerow([f])
 
 	for e in entries:
-		if e.multiLine:
-			entriesNamesCSV.writerow([e.displayName])
+		entriesNamesCSV.writerow([e.displayName])
 
 def generateDatabase(entries):
 	con = lite.connect('entries.db')
@@ -269,6 +270,7 @@ if __name__ == '__main__':
 		print "4. parseBannerPaths"
 		print "5. dumpDisplayNames"
 		print "6. testNonNullBanners"
+		print "7. testYellowPages"
 		print "x. exit"
 
 		choice  = (raw_input("choice: ")).rstrip()
@@ -285,6 +287,8 @@ if __name__ == '__main__':
 			dumpDisplayNames(allEntries)
 		elif choice == "6":
 			testNonNullBanners(allEntries)
+		elif choice == "7":
+			yellowPages.testParseText(allEntries)
 		elif choice == "x":
 			exit()
 		else:
