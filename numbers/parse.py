@@ -197,12 +197,12 @@ def parseBannerPaths(entries):
 	for row in reader:
 		matchedEntry = None
 		for e in entries:
-			if e.displayName == row[0]:
+			if e.displayName == row[1]:
 				matchedEntry = e
 		try:
-			matchedEntry.bannerPath = row[1]
+			matchedEntry.bannerPath = row[0]
 		except:
-			print "Exception: " + row[0] + " : " + row[1] + ";"
+			print "Exception: " + row[1] + " : " + row[0] + ";"
 #iterate over every line in WhitePages.txt
 #Determines first if line should be skipped
 #Check if begins with a capital letter
@@ -265,6 +265,9 @@ def sanityCheck(entries):
 			print e.displayName + " is multiLine with one line"
 		if len(e.lines) < 1:
 			print e.displayName + " has no lines"
+		if e.displayName.rstrip() != e.displayName:
+			print e.displayName + " has trailing space"
+
 
 def testNonNullBanners(entries):
 	for e in entries:
@@ -288,7 +291,10 @@ if __name__ == '__main__':
 		print "6. testNonNullBanners"
 		print "7. testYellowPages"
 		print "8. Run Banner AutoComplete first run"
-		print "9. Run Banner AutoComplete on partial banner.csv"
+		print "9. Run Banner AutoComplete on partial banner.csv (outputs to bannersComplete.csv)"
+		print "10. Generate yellowPages patch"
+		print "11. Apply yellowPages patch"
+		print "12. Generate categories CSV"
 		print "x. exit"
 
 		choice  = (raw_input("choice: ")).rstrip()
@@ -306,7 +312,7 @@ if __name__ == '__main__':
 		elif choice == "6":
 			testNonNullBanners(allEntries)
 		elif choice == "7":
-			yellowPages.testParseText(allEntries)
+			yellowPages.testYellowPages(getAllDisplayNames(allEntries))
 		elif choice == "8":
 			bannerNames = getBannerNames()
 			displayNames = getAllDisplayNames(allEntries)
@@ -317,6 +323,18 @@ if __name__ == '__main__':
 			displayNames = getAllDisplayNames(allEntries)
 			matchedBanners = autoCompleter.runAutoCompleter(bannerNames, displayNames)
 			autoCompleter.writeOutMatches(matchedBanners, "bannersCompleted.csv")
+		elif choice == "10":
+			allCategories = yellowPages.parseText()
+			unmatched = yellowPages.getUnmatchedEntries(allCategories, getAllDisplayNames(allEntries))
+			intelligentlyMatched = yellowPages.intelligentlyMatch(unmatched, getAllDisplayNames(allEntries))
+			unmatched = yellowPages.removeIntelligentlyMatched(unmatched, intelligentlyMatched)
+			matches = autoCompleter.runAutoCompleter(unmatched, getAllDisplayNames(allEntries))
+			autoCompleter.writeOutMatches(matches + intelligentlyMatched, "yellowPagesPatch.csv")
+		elif choice == "11":
+			yellowPages.applyPatch()
+		elif choice == "12":
+			yellowPages.generateCategoriesCSV()
+			yellowPages.categoriesSanityCheck(getAllDisplayNames(allEntries))
 		elif choice == "x":
 			exit()
 		else:

@@ -1,22 +1,98 @@
 #Parse Yellow Pages
-
+import autoCompleter
+import csv
 class Category:
 	def __init__(self):
 		self.categoryName = ""
 		self.categoryEntries = []
 
-def testParseText(allEntries):
-	allCategories = parseText()
-	checkAgainstAllEntries(allCategories, allEntries)
+def testYellowPages(associatedNames):
+	allCategories = parseText("YellowPagesPatched.txt")
+	unmatched = getUnmatchedEntries(allCategories, associatedNames)
+	intelligentlyMatched = intelligentlyMatch(unmatched, associatedNames)
+	sumC = 0
+	for c in allCategories:
+		sumC = sumC + len(c.categoryEntries)
+	print "All possible: " + str(sumC) 
+	print "length unmatched: " + str(len(unmatched))
 
+	print "intelligentlyMatched: " + str(len(intelligentlyMatched))
+	newUnmatched = removeIntelligentlyMatched(unmatched, intelligentlyMatched)
+	print "new length unmatched: " + str(len(newUnmatched))
 
-def parseText():
-	yellowPagesFile = file("Yellow Pages.txt", "r")
+	allCategories = parseText("YellowPagesPatched.txt")
+	unmatched = getUnmatchedEntries(allCategories, associatedNames)
+	print "len post patched: " + str(len(unmatched))
+	for u in unmatched:
+		print u
+
+def applyPatch(inFileName="Yellow Pages.txt", outFileName="YellowPagesPatched.txt"):
+	inFile = file(inFileName, "r")
+	outFile = file(outFileName, "w")
+	matches = getPatchMatches()
+
+	for line in inFile:
+		for m in matches:
+			if line.rstrip() == m[0].rstrip():
+				line = m[1].rstrip()
+		outFile.write(line.rstrip() + "\n")
+
+def categoriesSanityCheck(associatedNames):
+	categoriesFile = file("categories.csv", "r")
+	categoriesCSV = csv.reader(categoriesFile)
+	print "RUNNING CATEGORIES SANITY CHECK"
+	for row in categoriesCSV:
+		if row[0] not in associatedNames:
+			print row[0] + "does not exist in displayNames!"
+	print "CATEGORIES SANITY CHECK FINISHED"
+
+#CSV in format (entry, category it belongs to)
+def generateCategoriesCSV():
+	allCategories = parseText("YellowPagesPatched.txt")
+	categoriesFile = file("categories.csv", "w")
+	categoriesCSV = csv.writer(categoriesFile, quoting=csv.QUOTE_ALL)
+
+	for c in allCategories:
+		for e in c.categoryEntries:
+			categoriesCSV.writerow((e, c.categoryName))
+
+def getUnmatchedEntries(allCategories, associatedNames):
+	unmatchedCatEntries = []
+
+	for c in allCategories:
+		for e in c.categoryEntries:
+			if e not in associatedNames:
+				unmatchedCatEntries.append(e)
+	return list(set(unmatchedCatEntries))
+
+def getPatchMatches():
+	patchFile = file("yellowPagesPatch.csv")
+	patchCSV = csv.reader(patchFile)
+	matches = []
+	for row in patchCSV:
+		matches.append(row)
+
+	return matches
+
+def intelligentlyMatch(unmatched, associatedNames):
+	matches = []
+	for u in unmatched:
+		for a in associatedNames:
+			newu = u.lower().replace(" ", "")
+			newa = a.lower().replace(" ", "")
+			if newa in newu or newu in newa:
+				matches.append((u, a))
+
+	return matches
+
+#returns array of Category
+def parseText(inFile="Yellow Pages.txt"):
+	yellowPagesFile = file(inFile, "r")
 	isNewCategory = True
 	allCategories = []
 
 	for line in yellowPagesFile:
-		if line == "\n" or line == "\r\n":
+		if line.rstrip() =="":
 			isNewCategory = True
 			continue
 		elif not line[0].isalpha(): #Skip line begins with a space (generally if is additional info)
@@ -31,30 +107,13 @@ def parseText():
 
 	return allCategories
 
+def removeIntelligentlyMatched(unmatched, intelligentlyMatched):
+	allIntelligentlyMatched = []
+	actuallyUnmatched = []
+	for i in intelligentlyMatched:
+		allIntelligentlyMatched.append(i[0])
 
-def checkAgainstAllEntries(allCategories, allEntries):
-	associatedNames = []
-
-	for e in allEntries:
-		associatedNames.append(e.displayName)
-	for c in allCategories:
-		for e in c.categoryEntries:
-			if e not in associatedNames:
-				print e + ";"
-
-# def generateCSVs(entries):
-# 	imageNamesFile = file("imageNames.csv", "wb")
-# 	entriesNamesFile = file("entryNames.csv", "wb")
-
-# 	imageNamesCSV = csv.writer(imageNamesFile)
-# 	entriesNamesCSV = csv.writer(entriesNamesFile, quoting=csv.QUOTE_ALL)
-
-# 	files = listdir("./ready")
-
-# 	for f in files:
-# 		if f[-4:] == ".jpg":
-# 			f = f[:-4]
-# 		imageNamesCSV.writerow([f])
-
-# 	for e in entries:
-# 		entriesNamesCSV.writerow([e.displayName])
+	for u in unmatched:
+		if u not in allIntelligentlyMatched:
+			actuallyUnmatched.append(u)
+	return actuallyUnmatched
