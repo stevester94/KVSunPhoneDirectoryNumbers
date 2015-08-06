@@ -41,10 +41,79 @@ class _GetchWindows:
 
 
 
+numbers = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+import csv
 
-call(["clear"])
-string = ""
-while True:
+#returns [(entry, possibleEntryItHasBeenMatched to)]
+# IE maps entry->possibleEntries
+def runAutoCompleter(entriesToMatch, possibleEntries):
 	call(["clear"])
 	getch = _Getch()
-	print getch
+	matches = []
+
+	for entry in entriesToMatch:
+		matchedEntry = ""
+		oldMatches = []
+		possibleMatches = []
+		c = ""
+		string = ""
+
+		while True:
+			call("clear")
+			print "entry to match: " + entry
+
+			if c == "|":
+				break
+			elif len(c) > 0 and ord(c) == 127:
+				string = string[:-1]
+			elif c in numbers:
+				matchedEntry = possibleMatches[int(c)]
+				break
+			else:
+				string = string + c
+			possibleMatches = getPossibleMatches(string, possibleEntries)
+
+
+
+			index = 0
+			for i in range(10):
+				try:
+					print str(index) + ":" + possibleMatches[i]
+				except:
+					print str(index) + ":"
+				index = index + 1
+
+			print ""
+
+			print string + "_"
+			c = getch()
+		matches.append((entry, matchedEntry))
+
+	print "done"
+	for m in matches:
+		print m[0] + " : " + m[1]
+
+	return matches
+
+def getPossibleMatches(inS, possibleEntries):
+	maxNumEntries = 10
+	retAr = []
+	for e in possibleEntries:
+		if e[:len(inS)].lower() == inS.lower():
+			retAr.append(e)
+		if len(retAr) >= maxNumEntries:
+			break
+	return retAr
+
+def writeOutMatches(matches, outFileName):
+	outFile = file(outFileName, "w")
+	matchesCSV = csv.writer(outFile, quoting=csv.QUOTE_ALL)
+
+	for m in matches:
+			matchesCSV.writerow(m)
+
+if __name__ == '__main__':
+	possibleEntries = ["the", "lel", "topKek", "top"]	
+	entriesToMatch  = ["FUGGGG", "chortle"]
+
+	runAutcompleter(entriesToMatch, possibleEntries, "autoCompleterTest")

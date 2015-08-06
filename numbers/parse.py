@@ -8,6 +8,7 @@ import re
 import sqlite3 as lite
 import csv
 import yellowPages
+import autoCompleter
 
 from os import listdir
 
@@ -52,27 +53,11 @@ def determineSkip(line):
 		return True
 	else:
 		return False
+
 def dumpDisplayNames(entries):
 	for e in entries:
 		print e.displayName + ";"
 
-#Generate CSV files for entry names and formatted image names
-def generateCSVs(entries):
-	imageNamesFile = file("imageNames.csv", "wb")
-	entriesNamesFile = file("entryNames.csv", "wb")
-
-	imageNamesCSV = csv.writer(imageNamesFile)
-	entriesNamesCSV = csv.writer(entriesNamesFile, quoting=csv.QUOTE_ALL)
-
-	files = listdir("./formatted")
-
-	for f in files:
-		if f[-4:] == ".jpg":
-			f = f[:-4]
-		imageNamesCSV.writerow([f])
-
-	for e in entries:
-		entriesNamesCSV.writerow([e.displayName])
 
 def generateDatabase(entries):
 	con = lite.connect('entries.db')
@@ -136,7 +121,37 @@ def generateDatabase(entries):
 	con.commit()
 	con.close()
 
+#Get all banner file names from ready folder
+def getBannerNames():
+	files = listdir("./ready")
+	bannerNames = []
 
+	for f in files:
+		if f[-4:] == ".jpg":
+			f = f[:-4]
+		bannerNames.append(f)
+
+	return bannerNames
+
+def getUnmatchedBannersFromCSV():
+	bannerFile = file("banners.csv", "r")
+	bannerCSV = csv.reader(bannerFile)
+	unmatched = []
+
+	for row in bannerCSV:
+		if row[1] == "":
+			unmatched.append(row[0])
+
+	return unmatched
+
+#return array of display names for all entries
+def getAllDisplayNames(allEntries):
+	allDisplayNames = []
+
+	for e in allEntries:
+		allDisplayNames.append(e.displayName)
+
+	return allDisplayNames
 
 #matches out all numbers and remove them, place them in phonenumber field
 #Run on all, number is only removed from single line entries
@@ -174,6 +189,7 @@ def parseAndFormEntries(entries):
 		while entry.displayName[-1] == ' ' or entry.displayName[-1] == '	':
 			entry.displayName = entry.displayName[:-1]
 
+#set banner paths of entries based on the csv
 def parseBannerPaths(entries):
 	csvFile = file("banners.csv", "rb")
 	reader = csv.reader(csvFile)
@@ -271,6 +287,8 @@ if __name__ == '__main__':
 		print "5. dumpDisplayNames"
 		print "6. testNonNullBanners"
 		print "7. testYellowPages"
+		print "8. Run Banner AutoComplete first run"
+		print "9. Run Banner AutoComplete on partial banner.csv"
 		print "x. exit"
 
 		choice  = (raw_input("choice: ")).rstrip()
@@ -289,6 +307,16 @@ if __name__ == '__main__':
 			testNonNullBanners(allEntries)
 		elif choice == "7":
 			yellowPages.testParseText(allEntries)
+		elif choice == "8":
+			bannerNames = getBannerNames()
+			displayNames = getAllDisplayNames(allEntries)
+			matchedBanners = autoCompleter.runAutoCompleter(bannerNames, displayNames)
+			autoCompleter.writeOutMatches(matchedBanners, "banners.csv")
+		elif choice == "9":
+			bannerNames = getUnmatchedBannersFromCSV()
+			displayNames = getAllDisplayNames(allEntries)
+			matchedBanners = autoCompleter.runAutoCompleter(bannerNames, displayNames)
+			autoCompleter.writeOutMatches(matchedBanners, "bannersCompleted.csv")
 		elif choice == "x":
 			exit()
 		else:
