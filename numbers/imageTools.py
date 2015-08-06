@@ -21,8 +21,7 @@ def resize():
 	counter = 0
 	for f in files:
 		print counter
-		name = f[:-4] + ".bmp"
-		call(["convert", "./sanitized/" + f, "-resize", "600x", "-colors", "256", "./ready/" + name])
+		call(["convert", "./sanitized/" + f, "-resize", "600x", "-colors", "256", "./ready/" + f])
 		counter = counter + 1
 
 def sanitize():
