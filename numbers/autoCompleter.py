@@ -50,6 +50,7 @@ def runAutoCompleter(entriesToMatch, possibleEntries):
 	call(["clear"])
 	getch = _Getch()
 	matches = []
+	skipFlag = False
 
 	for entry in entriesToMatch:
 		matchedEntry = ""
@@ -62,7 +63,10 @@ def runAutoCompleter(entriesToMatch, possibleEntries):
 			call("clear")
 			print "entry to match: " + entry
 
-			if c == "|":
+			if c == "|": #FOR WHAT PURPOSE?
+				break
+			if c == "x":
+				skipFlag = True
 				break
 			elif len(c) > 0 and ord(c) == 127:
 				string = string[:-1]
@@ -82,12 +86,16 @@ def runAutoCompleter(entriesToMatch, possibleEntries):
 				except:
 					print str(index) + ":"
 				index = index + 1
-
+			print "|: quit early"
+			print "x: skip"
 			print ""
 
 			print string + "_"
 			c = getch()
-		matches.append((entry, matchedEntry))
+		if not skipFlag:
+			matches.append((entry, matchedEntry))
+		else:
+			skipFlag = False
 
 	print "done"
 	for m in matches:

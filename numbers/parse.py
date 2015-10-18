@@ -285,7 +285,7 @@ if __name__ == '__main__':
 		print "options: "
 		print "1. run sanity checks"
 		print "2. generateDatabase"
-		print "3. generateCSVs"
+		# print "3. generateCSVs"
 		print "4. parseBannerPaths"
 		print "5. dumpDisplayNames"
 		print "6. testNonNullBanners"
