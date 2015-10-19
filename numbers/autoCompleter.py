@@ -63,9 +63,7 @@ def runAutoCompleter(entriesToMatch, possibleEntries):
 			call("clear")
 			print "entry to match: " + entry
 
-			if c == "|": #FOR WHAT PURPOSE?
-				break
-			if c == "x":
+			if c == "|":
 				skipFlag = True
 				break
 			elif len(c) > 0 and ord(c) == 127:
@@ -86,8 +84,7 @@ def runAutoCompleter(entriesToMatch, possibleEntries):
 				except:
 					print str(index) + ":"
 				index = index + 1
-			print "|: quit early"
-			print "x: skip"
+			print "|: skip"
 			print ""
 
 			print string + "_"

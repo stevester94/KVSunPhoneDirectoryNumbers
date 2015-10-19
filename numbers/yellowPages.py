@@ -99,7 +99,7 @@ def parseText(inFile="Yellow Pages.txt"):
 			continue
 		elif isNewCategory:
 			c = Category()
-			c.categoryName = line.rstrip()
+			c.categoryName = line.rstrip().upper()
 			allCategories.append(c)
 			isNewCategory = False
 		else:
