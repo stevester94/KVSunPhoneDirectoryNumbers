@@ -41,7 +41,8 @@ for row in con.execute("select displayName, associatedNumbers, allLines from ent
 	query = query + 'allLines="' + allLines + '" '
 	query = query + 'WHERE displayName = "' + displayName + '"'
 
-	print query
+
+	con.execute(query)
 
 
 
