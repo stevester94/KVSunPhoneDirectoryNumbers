@@ -25,12 +25,11 @@ void updateEntry(char* displayName, char* newAllLines) {
    strcat(query, displayName);
    strcat(query, "\";");
 
-   cout << "QUERY: " << query << endl;
+   
    returnCode = sqlite3_exec(db, query, blankCallBack, NULL, &zErrMsg);
    if( returnCode != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
-   }else{
-      fprintf(stdout, "Operation done successfully\n");
+      cout << "   QUERY: " << query << endl;
    }
 
 }
