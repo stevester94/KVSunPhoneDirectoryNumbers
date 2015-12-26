@@ -1,0 +1,73 @@
+The data that you put into the excel sheet is exactly how it will go into the app!
+Keep in mind, computers are very dumb, which means you have to be very precise!
+For example, "800-555-5555" is different than "800 555 5555", these kinds of things trip the computer up.
+
+Ignore the file "current", you won't have to mess with that.
+
+#############################
+Explanation of the workbook #
+#############################
+There are two sheets: Entries, Categories
+
+the "Entries" sheet is the data that I've pulled from the text of the phonebook.
+
+the "displayName" column is what the user will see on a row of the app 
+- in the phonebook it is usually the heading of an entry, IE a person or business.
+- displayName is the unique identifier for an entry in the phone book.
+- displayName can't contain line breaks
+- displayName can't contain phone numbers
+  - This helps keep the data organized!
+
+the "allLines" column is the entire text of an entry from the phonebook, this is important for multiline entries.
+- this is where the actual info for an entry is kept (IE phone numbers, and any other misc. info)
+
+the "bannerPath" column is where you specify the image name for the ad for that entry
+- can't contain the file extension
+- if there isn't a banner then just put "no path entered"
+
+
+the "Categories" sheet lets the app know which category in the yellow pages an Entry belongs to.
+
+the "displayName" column will contain the same displayName's from the "Entries" sheet
+- This MUST be EXACTLY the same between the two sheets, it will be best to do a copy and paste for the display names
+  - If they aren't the exact same all sorts of bad things will happen to the app!
+
+the "category" column says which categories that entry should belong to
+- An entry can belong to any number of categories, just make new rows and new category names as necessary.
+- Again, category names need to be exactly the same, otherwise they'll show up as distinct categories.
+
+#############################
+Explanation of Banners      #
+#############################
+The banners for the ads are under the folder "banners"
+Sizes are as follows:
+-Standard: 600x254
+-Half Screen: 600x500
+-Full Screen: 600x1000
+
+These are rough approximations, actual screen coverage depends on the resolution of the phone, but these will be good enough.
+
+All banner files should be saved as .jpg
+
+
+#############################
+Important info              #
+#############################
+
+Adding people or businesses to the spreadsheet is as easy as making a new row, just fill out the columns accordingly
+- Line breaks in excel are done with "Alt + Enter"
+Adding new images is as easy as putting it in the banner folder and setting the banner column for that business accordingly
+
+It's important to note that if a business is to have a different banner for different categories in the yellow pages then
+it actually needs to have a completely seperate entry in the "Entries" sheet. See Barnes Bargains for an example.
+
+It's VERY important to be consistent! IE numbers should always be in the form ###-####
+- It doesn't matter how you format something, it's just important to keep it consistent.
+
+If you delete an entry out of the "Entries" sheet, be sure to do the same in the Categories sheet.
+
+And always feel free to shoot me an email at ssmackey@ucdavis.edu if you have any trouble!
+
+-Steven
+
+
