@@ -1,37 +1,69 @@
+// When program encounters a \n in the allLines field in the database it swaps it with \r\n
+
+
+//compile with g++ sanityCheck.cpp -l sqlite3
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sqlite3.h> 
 #include <iostream>
 #include <assert.h>
+#include <vector>
 
 using namespace std;
 //Global sqlite3 database object
 sqlite3 *db;
+vector<char**> rows;
+vector<char*> queries;
 
 static int blankCallBack(void *data, int argc, char **argv, char **azColName) {
    return 0;
 }
 
-void updateEntry(char* displayName, char* newAllLines) {
-   char* query = new char[10000];
+void runQueries() {
    int returnCode;
-   char *zErrMsg = 0;
+   char* errorString = 0;
+   static int callCount = 0;
 
+   for(vector<char*>::iterator it = queries.begin(); it != queries.end(); it++) {
+      char* query = *it;
+
+      returnCode = sqlite3_exec(db, query, NULL, NULL, &errorString);
+
+      if( returnCode != SQLITE_OK ){
+         cout << "error\n";
+         cout << query << endl;
+         exit(1);
+      } else 
+         cout << "Success on: " << callCount << endl;
+
+      callCount++;
+
+   }
+}
+
+void generateQuery(char* displayName, char* newAllLines) {
+   static int callCount = 0;
+   int totalLength;
+
+   char* UPDATE_CLAUSE = "UPDATE Entries SET allLines= \"";
+   char* WHERE_CLAUSE = "\" WHERE displayName= \"";
+   char* END_CLAUSE = "\";";
+   char* query;
+
+   totalLength = strlen(UPDATE_CLAUSE) + strlen(WHERE_CLAUSE) + strlen(END_CLAUSE) + strlen(displayName) + strlen(newAllLines) + 1;
+
+   query = new char[totalLength];
    query[0] = '\0';
 
-   strcat(query, "UPDATE Entries SET allLines= \"");
+   strcat(query, UPDATE_CLAUSE);
    strcat(query, newAllLines);
-   strcat(query, "\" WHERE displayName= \"");
+   strcat(query, WHERE_CLAUSE);
    strcat(query, displayName);
-   strcat(query, "\";");
+   strcat(query, END_CLAUSE);
 
-   
-   returnCode = sqlite3_exec(db, query, blankCallBack, NULL, &zErrMsg);
-   if( returnCode != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      cout << "   QUERY: " << query << endl;
-   }
-
+   queries.push_back(query);
 }
 
 //Called by the select statement, individual call for each record SELECT pulls
@@ -59,31 +91,22 @@ char* convertNewLinesToWin(char* inString) {
 
 }
 
+//Pushes displayName and allLines to vector rows
 static int callback(void *data, int argc, char **argv, char **azColName){
    //Iterates through each column found in that record
+   char** row = new char*[2];
 
-   assert(argc == 2);//If have more than 2 args something went wrong, dont want to fuck the database
 
-   char* displayName = argv[0];
-   char* allLines = argv[1];
+   char* displayName = new char[strlen(argv[0])+1];
+   char* allLines = new char[strlen(argv[1])+1];
 
-   cout << "RECORD: " << displayName << " :\n";
+   strcpy(displayName, argv[0]);
+   strcpy(allLines, argv[1]);
 
-   char* convertedLines = convertNewLinesToWin(allLines);
+   row[0] = displayName;
+   row[1] = allLines;
 
-   //DEBUG
-   // for(int i = 0; i < strlen(convertedLines); i++) {
-   //    char currentChar = convertedLines[i];
-
-   //    if(currentChar == '\r')
-   //       cout << "1";
-   //    else if(currentChar == '\n')
-   //       cout << "2";
-   //    else
-   //       cout << "0";
-   // }
-
-   updateEntry(displayName, convertedLines);
+   rows.push_back(row);
 
    return 0;
 }
@@ -103,17 +126,54 @@ int main(int argc, char* argv[])
       fprintf(stderr, "Opened database successfully\n");
    }
 
-   /* Create SQL statement */
+   //Populate the row vector
    query = "SELECT displayName, allLines from Entries";
-
-   /* Execute SQL statement */
    rc = sqlite3_exec(db, query, callback, NULL, &zErrMsg);
    if( rc != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
    }else{
-      fprintf(stdout, "Operation done successfully\n");
+      fprintf(stdout, "Select executed successfully\n");
    }
+
+
+   // Convert allLines in row accordingly and update entry in DB
+   int callCount = 0;
+   for(vector<char**>::iterator it = rows.begin(); it != rows.end(); it++, callCount++) {
+      char* displayName;
+      char* allLines;
+      char* newAllLines;
+
+      try {
+         // cout << "dereferencing...\n";
+         displayName = (*it)[0];
+         allLines = (*it)[1];
+      } catch(int e) {
+         cout << "dereferencing failed\n";
+         exit(1);
+      }
+
+      try {
+         // cout << "converting...\n";
+         newAllLines = convertNewLinesToWin(allLines);
+      } catch(int e) {
+         cout << "convert failed\n";
+         exit(1);
+      }
+
+      try {
+         // cout << "updating...\n";
+         generateQuery(displayName, newAllLines);
+      } catch(int e) {
+         cout << "update failed\n";
+         exit(1);
+      }
+   }
+
+   //Run those fucking queries
+   runQueries();
+
+
    sqlite3_close(db);
 
    return 0;
