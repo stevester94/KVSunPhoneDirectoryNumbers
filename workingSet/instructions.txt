@@ -2,8 +2,6 @@ The data that you put into the excel sheet is exactly how it will go into the ap
 Keep in mind, computers are very dumb, which means you have to be very precise!
 For example, "800-555-5555" is different than "800 555 5555", these kinds of things trip the computer up.
 
-Ignore the file "current", you won't have to mess with that.
-
 #############################
 Explanation of the workbook #
 #############################
@@ -24,6 +22,11 @@ the "allLines" column is the entire text of an entry from the phonebook, this is
 the "bannerPath" column is where you specify the image name for the ad for that entry
 - can't contain the file extension
 - if there isn't a banner then just put "no path entered"
+
+the "associatedNumbers" column shows all of the numbers that were in the "allLines" column when the sheet was made
+- It will not stay updated if you change the "allLines" column
+- It does not need to be updated if you change any numbers in "allLines"
+  - I left this column in so that you can see at a glance what numbers are associated with an entry (IE if you need to call them)
 
 
 the "Categories" sheet lets the app know which category in the yellow pages an Entry belongs to.
@@ -64,7 +67,6 @@ It's important to note that if a business is to have a different banner for diff
 it actually needs to have a completely seperate entry in the "Entries" sheet. See Barnes Bargains for an example.
 
 It's VERY important to be consistent! IE numbers should always be in the form ###-###-####
-- It doesn't matter how you format something, it's just important to keep it consistent.
 
 If you delete an entry out of the "Entries" sheet, be sure to do the same in the Categories sheet.
 
