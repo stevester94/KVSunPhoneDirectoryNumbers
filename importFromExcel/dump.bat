@@ -1,0 +1,1 @@
+sqlite3 -header -csv entriesBeta.db "select * from Entries;" > entriesBetaDUMP.dmp
