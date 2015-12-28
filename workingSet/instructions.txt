@@ -16,7 +16,7 @@ the "displayName" column is what the user will see on a row of the app
 - displayName can't contain phone numbers
   - This helps keep the data organized!
 
-the "allLines" column is the entire text of an entry from the phonebook, this is important for multiline entries.
+the "allLines" column is the entire text of an entry from the phonebook, this is important for multi-line entries.
 - this is where the actual info for an entry is kept (IE phone numbers, and any other misc. info)
 
 the "bannerPath" column is where you specify the image name for the ad for that entry
@@ -28,6 +28,7 @@ the "associatedNumbers" column shows all of the numbers that were in the "allLin
 - It does not need to be updated if you change any numbers in "allLines"
   - I left this column in so that you can see at a glance what numbers are associated with an entry (IE if you need to call them)
 
+------------------------------------------------------------------------------------------------------
 
 the "Categories" sheet lets the app know which category in the yellow pages an Entry belongs to.
 
