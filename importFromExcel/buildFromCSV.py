@@ -9,6 +9,9 @@ CATEGORIES_SCHEMA = r"displayName TEXT, category TEXT, FOREIGN KEY(displayName) 
 CATEGORIES_LIST_SCHEMA = r"Category TEXT PRIMARY KEY"
 STANDARD_REG  = r"[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"
 
+entriesCsvName = "EntriesBetaCSV.csv"
+categoriesCsvName = "CategoriesAlphaCSV.csv"
+
 entries = []
 categories = []
 
@@ -120,7 +123,7 @@ def generateDatabase():
 def populateCategories():
 	print "Populating categories..."
 
-	csvFile = file("Categories.csv", "r")
+	csvFile = file(categoriesCsvName, "r")
 	reader = csv.reader(csvFile)
 	for row in reader:
 		categories.append((row[0], row[1]))
@@ -129,7 +132,7 @@ def populateCategories():
 def populateEntries():
 	print "Populating entries..."
 
-	csvFile = file("Entries.csv", "rb")
+	csvFile = file(entriesCsvName, "rb")
 	reader = csv.reader(csvFile)
 
 	for row in reader:
@@ -146,6 +149,12 @@ def populateEntries():
 			entry.containsNumber = False
 		else:
 			entry.containsNumber = True
+
+		# Determine if has multiple numbers
+		if len(entry.associatedNumbers) > 1:
+			entry.hasMultipleNumbers = True
+		else:
+			entry.hasMultipleNumbers = False
 
 		# Determine if has multiple lines
 		if '\n' in entry.allLines:
