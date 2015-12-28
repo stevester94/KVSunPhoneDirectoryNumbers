@@ -24,7 +24,7 @@ CATEGORIES_LIST_SCHEMA = r"Category TEXT PRIMARY KEY"
 
 class RawEntry:
 	def __init__(self):
-		self.lines = []
+		self.lines = ""
 		self.containsNumber = False
 		self.multiLine = False
 		self.associatedNumbers = []

@@ -54,6 +54,8 @@ All banner files should be saved as .jpg
 Important info              #
 #############################
 
+All phone numbers should be in the format <area code>-<###>-<####> IE "760-379-3571"
+
 Adding people or businesses to the spreadsheet is as easy as making a new row, just fill out the columns accordingly
 - Line breaks in excel are done with "Alt + Enter"
 Adding new images is as easy as putting it in the banner folder and setting the banner column for that business accordingly
@@ -61,7 +63,7 @@ Adding new images is as easy as putting it in the banner folder and setting the 
 It's important to note that if a business is to have a different banner for different categories in the yellow pages then
 it actually needs to have a completely seperate entry in the "Entries" sheet. See Barnes Bargains for an example.
 
-It's VERY important to be consistent! IE numbers should always be in the form ###-####
+It's VERY important to be consistent! IE numbers should always be in the form ###-###-####
 - It doesn't matter how you format something, it's just important to keep it consistent.
 
 If you delete an entry out of the "Entries" sheet, be sure to do the same in the Categories sheet.
